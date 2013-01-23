@@ -3,7 +3,7 @@
 require 'rexml/document'
 query = $*[0]
 
-path = '/Users/benjamin/Library/Application Support/Snippets/Snippets.xml'
+path = ENV['SNIPPET_DB']
 doc = REXML::Document.new File.new(path)
 
 
