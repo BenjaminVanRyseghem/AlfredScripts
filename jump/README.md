@@ -1,9 +1,10 @@
-== About ==
+= Jump plugin
+== About
 
 The goal of this plugin is to open the finder on a bookmarked directory.
 Bookmarks are managed by jump(https://github.com/flavio/jump)
 
-== Use ==
+== Use
 
 j [ -l | --list | -h | --help ] | [ -d | --del name] | name
 
@@ -15,16 +16,16 @@ Options:
 	-d | --delete	: delete the bookmark provided
 	-l  | --list		: list the bookmarks
 
-== Action ==
+== Action
 
 While browsing a folder, you can use the action "Jump Add", which will ask for a bookmark name
 and bookmark the folder with the name.
 
-== Known issue ==
+== Known issue
 
-== Version ==
+== Version
 
 1.0
     - First version of the script
 
-== To Do ==
+== To Do
