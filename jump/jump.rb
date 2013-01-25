@@ -56,10 +56,14 @@ if option.nil?
         exit(1)
     else
         #NO ERROR
-       `open #{result}`
+       `open "#{result}"`
     end
     
 else
     #OPTION or NOTHING
+    if result.empty?
+        puts "Unknown bookmark: \'#{optionAndQuery.split(" ")[1]}\'."
+        exit(1)
+    end
     puts result
 end

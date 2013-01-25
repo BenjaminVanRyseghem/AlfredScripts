@@ -1,0 +1,15 @@
+= Bring Terminal plugin
+== About
+
+The goal of this plugin is to be used as global shortcut to bring the Terminal in front of others windows
+
+== Action
+
+Bring the last used Terminal in front. If none, create a window and open it.
+
+== Known issue
+
+== Version
+
+1.0
+    - First version of the script
