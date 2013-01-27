@@ -1,6 +1,4 @@
-"""I would like to thank the original author of this class: Peter Okma"""
-"""https://github.com/simonbs/alfred-cloudapp-workflow/blob/master/source/Feedback.py"""
-
+#author: Peter Okma
 import xml.etree.ElementTree as et
 import glob
 import sys
@@ -60,14 +58,12 @@ class Feedback():
         
     def buildXML(self, query, path):
         files = self.retrieveFiles(query,path)
-        if not files:
-            self.add_item(query, "Download a new image named "+query,query)
-        else:
-            for file in files:
-                index = file.rfind("/")
-                name = file[index+1:-6]
-                self.add_item(name, "Open the existing image named "+name, name)
-            
+        self.add_item(query, "Download a new image named "+query,query, "true","", "add.png")
+        for file in files:
+            index = file.rfind("/")
+            name = file[index+1:-6]
+            self.add_item(name, "Open the existing image named "+name, name)
+        
         
         
 f = Feedback()
