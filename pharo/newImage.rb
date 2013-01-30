@@ -2,81 +2,28 @@
 require 'fileutils'
 require 'find'
 
-def help
-    puts "    usage /.image pharo"
-    puts "          --hack     edit the sources of this script"
-    puts "          -h/--help  show this help text"
+new_image = false
+args = []
+
+s = $*[0]
+s.scan(/\"([^\"]+)\"/){|i| args << i[0]}
+
+name_index = 0
+if args.size == 3
+   if args[0].eql?('-f' )
+       new_image = true
+   end
+   name_index = 1    
 end
 
-if $*.size > 1
-    help
-    exit 1
-end
+name = args[name_index]
+path = args[name_index+1]
 
-#not used yet
-vmPath = ENV['VM_PATH']
-
-def editor()
-    if ENV['EDITOR']
-        return ENV['EDITOR']
-    else
-        return 'nano'
-    end
-end
-
-forced = false
-name = $*[0]
-
-if name[0..1] == "-f"
-    forced = true
-    name = name[3..-1]
-end
-
-def exists(name)
-    if (name == nil)
-        return nil
-    else 
-        return lookForFileNamed(ENV['PHARO_DIR'],name+".image")
-    end    
-end
-
-if $*[0] == "--help" || $*[0] == "-h"
-    help()
-    exit 0
-elsif $*[0] == "--hack"
-    sourceFile = `readlink #{__FILE__} || echo #{__FILE__}`
-    exec("#{editor()} #{sourceFile}")
-end
-
-# Check if the file already exists
-
-def lookForFileNamed(dir,name)
-    Find.find(dir) do |path|
-        if FileTest.directory?(path)
-            if dir == path
-                next
-            end
-            res = lookForFileNamed(path,name)
-            if res != nil
-                return File.join(path,res)
-            end
-        else
-           res = File.basename(path)
-           if res == name
-               return res
-           end
-        end
-    end
-    return nil
-end
-
-alreadyExists = exists(name)
-if alreadyExists != nil && !forced
-    puts "Already existing Pharo loaded from #{alreadyExists}"
-    `open "#{alreadyExists}"`
+if !new_image
+    puts "Already existing Pharo image\n#{path}"
+    `open "#{path}"`
     exit(0)
 end
-
 
 # ===========================================================================
 
@@ -85,11 +32,11 @@ tmp      = `mktemp -d -t pharo`.chomp
 
 imageUrl = "https://ci.inria.fr/pharo/view/Pharo-#{version}/job/Pharo-#{version}/lastSuccessfulBuild/artifact/Pharo.zip"
 artifact = "Pharo"
-path = ENV['PHARO_DIR']
 extraInstructions = ""
 
 # ===========================================================================
 
+puts "Downloading a new image from Jenkins"
 `cd "#{path}" && curl --retry 2 --connect-timeout 3 --anyauth "#{imageUrl}" --output "artifact.zip" &&  cp -f "#{path}/artifact.zip" "#{path}/backup.zip"  || cp "#{path}/backup.zip" "#{path}/artifact.zip"`
 #wget --tries=2 --timeout=3 --no-check-certificate "#{imageUrl}" --output-document="artifact.zip"
 
