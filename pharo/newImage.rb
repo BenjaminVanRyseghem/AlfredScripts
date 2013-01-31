@@ -9,7 +9,6 @@ s = $*[0]
 s.scan(/\"([^\"]+)\"/){|i| args << i[0]}
 
 name_index = args.size-3
-    IO.popen('pbcopy', 'w').puts s
 
 if args.size == 4 && args[0].eql?('-f' )
    new_image = true
