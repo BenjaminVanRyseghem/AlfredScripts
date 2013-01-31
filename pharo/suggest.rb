@@ -16,17 +16,18 @@ def findImagesFor(query, path)
     return Dir.glob(path+'/**/'+query+'*.image')
 end
 
-def buildXMLForFile(file)
+def buildXMLForFile(file, path)
     name = File.basename(file, File.extname(file))
-    path = File.expand_path(file)
-    return buildXMLItemFor('"'+name +'" "'+ path+'"', name, "Open image named "+name, "yes", "icon.png")
+    file_path = File.dirname(file)
+    dir = file_path[path.size+1..-1]
+    return buildXMLItemFor('"'+name +'" "'+ path+'" "'+ dir+'"', name, "Open image named "+name, "yes", "icon.png")
 end
 
 def buildSuggestionXML(query, path)
     string = '<items>'
-    string += buildXMLItemFor('"-f" "'+query+'" "'+path+'/'+query+'/'+query+'.image"', query, "Add a new image named "+query, "yes", "add.png")
+    string += buildXMLItemFor('"-f" "'+query+'" "'+path+'" "'+query+'"', query, "Add a new image named "+query, "yes", "add.png")
     files = findImagesFor(query, path)
-    files.each{ | file | string += buildXMLForFile(file) }
+    files.each{ | file | string += buildXMLForFile(file, path) }
     string += '</items>'
     return string
 end
