@@ -23,6 +23,11 @@ Options:
 
 == Version
 
+1.5
+
+    - Now it checks the version of the backed up image. If it's the same that the 
+image version on Jenkins server, it uses the backup to save some time
+
 1.4
 
     - Ad suggestion and workflow for Alfred 2
