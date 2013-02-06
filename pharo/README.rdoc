@@ -30,7 +30,7 @@ image version on Jenkins server, it uses the backup to save some time
 
 1.4
 
-    - Ad suggestion and workflow for Alfred 2
+    - Add suggestion and workflow for Alfred 2
 
 1.3
     - Add the argument -f
