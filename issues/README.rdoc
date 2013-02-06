@@ -1,0 +1,18 @@
+= Pharo issue tracker workflow
+
+== About
+
+This alfred plugin goal is to quickly access the pharo issue tracker
+
+== Use
+
+issue query
+
+It will open your default web browser on the issue selected in suggestions
+
+== Version
+
+1.0
+    - First version of the script
+
+== To Do
