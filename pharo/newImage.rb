@@ -2,8 +2,6 @@
 require 'fileutils'
 require 'find'
 
-IO.popen('pbcopy', 'w').puts $*
-
 def openImage(string, full_path)
     puts string
     `open "#{full_path}"`
