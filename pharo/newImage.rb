@@ -36,7 +36,7 @@ def retieveCurrentVersion()
 end
 
 def downloadNewVersion(path, destination)
-    imageUrl = "https://ci.inria.fr/pharo/view/Pharo-2.0/job/Pharo-2.0/lastSuccessfulBuild/artifact/Pharo.zip"
+    imageUrl = "https://ci.inria.fr/pharo/job/Pharo-2.0/lastSuccessfulBuild/artifact/Pharo.zip"
 
     backup = ''
     Dir.glob(File.join(path, '*.zip')).each do |file|
