@@ -16,11 +16,29 @@ def findImagesFor(query, path)
     return Dir.glob(path+'/**/'+query+'*.image')
 end
 
+def printDateFor(file)
+    return printDate(File.mtime(file))
+end
+
+def printDate(date)
+    today = Time.now
+    if(!today.year == date.year) 
+        return date.strftime("%d/%m/%Y")
+    end
+    if(!today.month == date.month)
+        return date.strftime("%d %b - %H:%M:%S")
+    end
+    if (today.day - date.day < 7)
+        return date.strftime("%A - %H:%M:%S")
+    end
+    return date.strftime("%d %a - %H:%M:%S")
+end
+
 def buildXMLForFile(file, path)
     name = File.basename(file, File.extname(file))
     file_path = File.dirname(file)
     dir = file_path[path.size+1..-1]
-    return buildXMLItemFor('"'+name +'" "'+ path+'" "'+ dir+'"', name, "Open image named "+name, "yes", "icon.png")
+    return buildXMLItemFor('"'+name +'" "'+ path+'" "'+ dir+'"', name, "Open image named "+name+" ("+printDateFor(file)+")", "yes", "icon.png")
 end
 
 def buildSuggestionXML(query, path)

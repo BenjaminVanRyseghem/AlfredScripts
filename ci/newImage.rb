@@ -2,8 +2,6 @@
 require 'fileutils'
 require 'find'
 
-IO.popen('pbcopy', 'w').puts $*
-
 def openImage(string, full_path)
     puts string
     `open "#{full_path}"`
@@ -38,7 +36,7 @@ def retieveCurrentVersion()
 end
 
 def downloadNewVersion(path, destination)
-    imageUrl = "https://ci.inria.fr/pharo/job/Event-Model/lastSuccessfulBuild/artifact/Event-Model.zip"
+    imageUrl = "https://ci.inria.fr/pharo/job/Pharo-2.0-Issue-Tracker-Image/lastSuccessfulBuild/artifact/Pharo-2.0-Issue-Tracker-Image.zip"
 
     backup = ''
     Dir.glob(File.join(path, '*.zip')).each do |file|
