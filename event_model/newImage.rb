@@ -22,36 +22,10 @@ def splitArguments(s)
     return args
 end
 
-def retieveCurrentVersion()
-    code = IO.popen("curl https://ci.inria.fr/pharo/job/Pharo-2.0/lastSuccessfulBuild/")
-    code = code.readlines.join[0..-2]
-    prefix = '      </h1><div><div id="description"><div>2.0 #'
-    line = ''
-    code.each_line { | l |
-        if l.chomp.start_with?(prefix)
-            line = l
-            break
-        end
-    }
-    size = prefix.size
-    return line[size, 5]
-end
-
 def downloadNewVersion(path, destination)
-    imageUrl = "https://ci.inria.fr/pharo/job/Event-Model/lastSuccessfulBuild/artifact/Event-Model.zip"
-
-    backup = ''
-    Dir.glob(File.join(path, '*.zip')).each do |file|
-        backup = file
-    end
-    backup = File.basename(backup,File.extname(backup))
-
-    current_version = retieveCurrentVersion()
-    if backup.eql?(current_version)        
-        `cp "#{path}/#{backup}.zip" "#{path}/artifact.zip"`
-    else
-        `curl --retry 2 --connect-timeout 3 --anyauth "#{imageUrl}" --output "#{path}/artifact.zip" &&  cp -f "#{path}/artifact.zip" "#{path}/#{current_version}.zip" && rm "#{path}/#{backup}.zip" || cp "#{path}/#{backup}.zip" "#{path}/artifact.zip"`
-    end
+    imageUrl = "https://ci.inria.fr/pharo-contribution/job/Event-Model/lastSuccessfulBuild/artifact/Event-Model.zip"
+    
+    `curl --retry 2 --time-cond "#{path}/backup.zip" --connect-timeout 3 --anyauth "#{imageUrl}" --output "#{path}/artifact.zip" &&  cp -f "#{path}/artifact.zip" "#{path}/backup.zip" || cp "#{path}/backup.zip" "#{path}/artifact.zip"`
 
     `unzip -xo "#{path}"/artifact.zip -d "#{destination}"`
     `rm "#{path}"/artifact.zip`
